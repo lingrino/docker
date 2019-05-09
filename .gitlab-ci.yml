@@ -25,14 +25,14 @@ lint-ci:
 build-ci:
   stage: build
   script:
-    - docker pull ${CI_REGISTRY_IMAGE}:ci || true
-    - docker build --cache-from ${CI_REGISTRY_IMAGE}:ci -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} -f ci.Dockerfile .
-    - docker push ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}
+    - docker pull ${CI_REGISTRY_IMAGE}/ci:latest || true
+    - docker build --cache-from ${CI_REGISTRY_IMAGE}/ci:latest -t ${CI_REGISTRY_IMAGE}/ci:${CI_COMMIT_SHA} -f ci.Dockerfile .
+    - docker push ${CI_REGISTRY_IMAGE}/ci:${CI_COMMIT_SHA}
 
 publish-ci:
   stage: publish
   only: [ master ]
   script:
-    - docker pull ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}
-    - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}:ci
-    - docker push ${CI_REGISTRY_IMAGE}:ci
+    - docker pull ${CI_REGISTRY_IMAGE}/ci:${CI_COMMIT_SHA}
+    - docker tag ${CI_REGISTRY_IMAGE}/ci:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}/ci:latest
+    - docker push ${CI_REGISTRY_IMAGE}:latest
