@@ -20,8 +20,7 @@ stages:
 lint-ci:
   stage: lint
   script:
-    # - hadolint ci.Dockerfile
-    - echo "true"
+    - hadolint ci.Dockerfile
 
 build-ci:
   stage: build
@@ -44,8 +43,7 @@ publish-ci:
 lint-docker:
   stage: lint
   script:
-    # - hadolint docker.Dockerfile
-    - echo "true"
+    - hadolint docker.Dockerfile
 
 build-docker:
   stage: build
