@@ -14,6 +14,7 @@ ARG HADOLINT_VERSION=1.16.3
 ### Packages           ###
 ##########################
 RUN apt-get update && apt-get install -y -qq \
+    bash \
     curl \
     docker \
     git \
@@ -29,5 +30,3 @@ RUN wget -q https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_V
     chmod 755 /usr/local/bin/hadolint
 
 COPY files/docker/hadolint.yml ~/.config/hadolint.yml
-
-ENTRYPOINT ["/bin/bash"]

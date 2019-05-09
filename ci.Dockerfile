@@ -130,5 +130,3 @@ RUN wget -q https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_
     chown root:root /usr/local/bin/vault && \
     chmod 755 /usr/local/bin/vault && \
     rm -f /tmp/vault.zip
-
-ENTRYPOINT ["/bin/bash"]
