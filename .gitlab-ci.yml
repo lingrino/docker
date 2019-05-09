@@ -18,7 +18,8 @@ stages:
 lint-ci:
   stage: lint
   script:
-    - hadolint ci.Dockerfile
+    - docker pull hadolint/hadolint
+    - docker run --rm -i hadolint/hadolint < ci.Dockerfile
 
 build-ci:
   stage: build
