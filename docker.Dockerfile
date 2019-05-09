@@ -1,7 +1,7 @@
 ##########################
 ### Metadata           ###
 ##########################
-FROM ubuntu:latest
+FROM docker:latest
 LABEL maintainer="srlingren@gmail.com"
 
 ##########################
@@ -13,14 +13,13 @@ ARG HADOLINT_VERSION=1.16.3
 ##########################
 ### Packages           ###
 ##########################
-RUN apt-get update && apt-get install -y -qq \
+RUN apk -q add --no-cache \
     bash \
     curl \
-    docker \
     git \
+    git-lfs \
     jq \
-    wget \
-    && rm -rf /var/lib/apt/lists/*
+    wget
 
 ##########################
 ### Hadolint           ###
