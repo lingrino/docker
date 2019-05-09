@@ -15,6 +15,9 @@ stages:
   - build
   - publish
 
+##########################
+### CI                 ###
+##########################
 lint-ci:
   stage: lint
   script:
@@ -36,3 +39,28 @@ publish-ci:
     - docker pull ${CI_REGISTRY_IMAGE}/ci:${CI_COMMIT_SHA}
     - docker tag ${CI_REGISTRY_IMAGE}/ci:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}/ci:latest
     - docker push ${CI_REGISTRY_IMAGE}/ci:latest
+
+##########################
+### Docker             ###
+##########################
+lint-docker:
+  stage: lint
+  script:
+    - echo "true"
+    # - docker pull hadolint/hadolint
+    # - docker run --rm -i hadolint/hadolint < docker.Dockerfile
+
+build-docker:
+  stage: build
+  script:
+    - docker pull ${CI_REGISTRY_IMAGE}/docker:latest || true
+    - docker build --cache-from ${CI_REGISTRY_IMAGE}/docker:latest -t ${CI_REGISTRY_IMAGE}/docker:${CI_COMMIT_SHA} -f docker.Dockerfile .
+    - docker push ${CI_REGISTRY_IMAGE}/docker:${CI_COMMIT_SHA}
+
+publish-docker:
+  stage: publish
+  only: [ master ]
+  script:
+    - docker pull ${CI_REGISTRY_IMAGE}/docker:${CI_COMMIT_SHA}
+    - docker tag ${CI_REGISTRY_IMAGE}/docker:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}/docker:latest
+    - docker push ${CI_REGISTRY_IMAGE}/docker:latest

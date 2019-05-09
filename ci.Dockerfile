@@ -23,10 +23,7 @@ ARG VAULT_VERSION=1.1.1
 ##########################
 ### Packages           ###
 ##########################
-COPY files/ci/repositories /etc/apk/repositories
-
 RUN apt-get update && apt-get install -y -qq \
-    bash \
     curl \
     docker \
     git \
@@ -37,7 +34,6 @@ RUN apt-get update && apt-get install -y -qq \
     python3-dev \
     python3-pip \
     shellcheck \
-    sudo \
     unzip \
     wget \
     && rm -rf /var/lib/apt/lists/*
