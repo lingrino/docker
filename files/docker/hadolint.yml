@@ -1,0 +1,4 @@
+ignored:
+  - DL3013 # PIP version pinning
+  - DL3016 # NPM version pinning
+  - DL3018 # APK version pinning
