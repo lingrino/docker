@@ -1,4 +1,4 @@
-image: docker:stable
+image: registry.gitlab.com/lingrino/docker/docker:latest
 
 services:
   - docker:dind
@@ -21,9 +21,7 @@ stages:
 lint-ci:
   stage: lint
   script:
-    - echo "true"
-    # - docker pull hadolint/hadolint
-    # - docker run --rm -i hadolint/hadolint < ci.Dockerfile
+    - hadolint ci.Dockerfile
 
 build-ci:
   stage: build
@@ -46,9 +44,7 @@ publish-ci:
 lint-docker:
   stage: lint
   script:
-    - echo "true"
-    # - docker pull hadolint/hadolint
-    # - docker run --rm -i hadolint/hadolint < docker.Dockerfile
+    - hadolint docker.Dockerfile
 
 build-docker:
   stage: build
