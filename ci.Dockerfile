@@ -66,6 +66,7 @@ RUN npm install --global \
 ### Python             ###
 ##########################
 RUN pip3 install --upgrade --no-input --no-cache-dir pip && \
+    pip install --upgrade --no-input --no-cache-dir setuptools && \
     pip install --upgrade --no-input --no-cache-dir \
     ansible \
     ansible-lint \
