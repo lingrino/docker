@@ -1,12 +1,10 @@
-# image: registry.gitlab.com/lingrino/docker/docker:latest
-image: docker:latest
+image: registry.gitlab.com/lingrino/docker/docker:latest
 
 services:
   - docker:dind
 
 variables:
   DOCKER_HOST: tcp://docker:2375/
-  DOCKER_DRIVER: overlay2
 
 before_script:
   - docker login -u ${CI_REGISTRY_USER} -p ${CI_JOB_TOKEN} ${CI_REGISTRY}
@@ -22,8 +20,7 @@ stages:
 lint-ci:
   stage: lint
   script:
-    # - hadolint ci.Dockerfile
-    - echo "true"
+    - hadolint ci.Dockerfile
 
 build-ci:
   stage: build
@@ -46,8 +43,7 @@ publish-ci:
 lint-docker:
   stage: lint
   script:
-    # - hadolint docker.Dockerfile
-    - echo "true"
+    - hadolint docker.Dockerfile
 
 build-docker:
   stage: build
