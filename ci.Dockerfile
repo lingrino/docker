@@ -23,7 +23,7 @@ ARG VAULT_VERSION=1.1.1
 ##########################
 ### Packages           ###
 ##########################
-RUN apt-get update && apt-get install -y -qq \
+RUN apt-get update && apt-get install --no-install-recommends -y -qq \
     curl \
     docker \
     git \
@@ -99,7 +99,7 @@ RUN wget -q https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_V
     chown root:root /usr/local/bin/hadolint && \
     chmod 755 /usr/local/bin/hadolint
 
-COPY files/ci/hadolint.yml ~/.config/hadolint.yml
+COPY files/ci/hadolint.yaml /root/.config/hadolint.yaml
 
 ##########################
 ### Packer             ###

@@ -28,4 +28,4 @@ RUN wget -q https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_V
     chown root:root /usr/local/bin/hadolint && \
     chmod 755 /usr/local/bin/hadolint
 
-COPY files/docker/hadolint.yml ~/.config/hadolint.yml
+COPY files/ci/hadolint.yaml /root/.config/hadolint.yaml
