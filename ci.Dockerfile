@@ -26,6 +26,7 @@ ARG VAULT_VERSION=1.1.1
 RUN apt-get update && apt-get install --no-install-recommends -y -qq \
     curl \
     docker \
+    gcc \
     git \
     jq \
     nmap \
