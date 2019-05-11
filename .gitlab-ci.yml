@@ -19,17 +19,11 @@ stages:
 ##########################
 lint-ci:
   stage: lint
-  only:
-    changes:
-      - ci.Dockerfile
   script:
     - hadolint ci.Dockerfile
 
 build-ci:
   stage: build
-  only:
-    changes:
-      - ci.Dockerfile
   script:
     - docker pull ${CI_REGISTRY_IMAGE}/ci:latest || true
     - docker build --cache-from ${CI_REGISTRY_IMAGE}/ci:latest -t ${CI_REGISTRY_IMAGE}/ci:${CI_COMMIT_SHA} -f ci.Dockerfile .
@@ -37,11 +31,7 @@ build-ci:
 
 publish-ci:
   stage: publish
-  only:
-    refs:
-      - master
-    changes:
-      - ci.Dockerfile
+  only: [ master ]
   script:
     - docker pull ${CI_REGISTRY_IMAGE}/ci:${CI_COMMIT_SHA}
     - docker tag ${CI_REGISTRY_IMAGE}/ci:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}/ci:latest
@@ -52,17 +42,11 @@ publish-ci:
 ##########################
 lint-docker:
   stage: lint
-  only:
-    changes:
-      - docker.Dockerfile
   script:
     - hadolint docker.Dockerfile
 
 build-docker:
   stage: build
-  only:
-    changes:
-      - docker.Dockerfile
   script:
     - docker pull ${CI_REGISTRY_IMAGE}/docker:latest || true
     - docker build --cache-from ${CI_REGISTRY_IMAGE}/docker:latest -t ${CI_REGISTRY_IMAGE}/docker:${CI_COMMIT_SHA} -f docker.Dockerfile .
@@ -70,11 +54,7 @@ build-docker:
 
 publish-docker:
   stage: publish
-  only:
-    refs:
-      - master
-    changes:
-      - docker.Dockerfile
+  only: [ master ]
   script:
     - docker pull ${CI_REGISTRY_IMAGE}/docker:${CI_COMMIT_SHA}
     - docker tag ${CI_REGISTRY_IMAGE}/docker:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}/docker:latest
