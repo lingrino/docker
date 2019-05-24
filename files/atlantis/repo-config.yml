@@ -1,0 +1,15 @@
+repos:
+  - id: /.*/
+    apply_requirements: [approved, mergeable]
+
+workflows:
+  default:
+    plan:
+      steps:
+        - run: source assume-role "$(cat atlantis-role-arn)")
+        - init
+        - plan
+    apply:
+      steps:
+        - run: source assume-role "$(cat atlantis-role-arn)")
+        - apply
