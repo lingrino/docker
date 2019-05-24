@@ -1,0 +1,4 @@
+machine api.heroku.com
+  login srlingren@gmail.com
+machine git.heroku.com
+  login srlingren@gmail.com

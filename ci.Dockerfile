@@ -14,11 +14,11 @@ ARG GORELEASER_VERSION=0.106.0
 # https://github.com/hadolint/hadolint/releases
 ARG HADOLINT_VERSION=1.16.3
 # https://www.packer.io/downloads.html
-ARG PACKER_VERSION=1.4.0
+ARG PACKER_VERSION=1.4.1
 # https://www.terraform.io/downloads.html
-ARG TERRAFORM_VERSION=0.12.0-rc1
+ARG TERRAFORM_VERSION=0.12.0
 # https://www.vaultproject.io/downloads.html
-ARG VAULT_VERSION=1.1.1
+ARG VAULT_VERSION=1.1.2
 
 ##########################
 ### Packages           ###
@@ -91,7 +91,7 @@ COPY files/ci/markdownlintrc /.markdownlintrc
 RUN wget -q https://github.com/goreleaser/goreleaser/releases/download/v${GORELEASER_VERSION}/goreleaser_Linux_x86_64.tar.gz -O /tmp/goreleaser.tar.gz && \
     mkdir /tmp/goreleaser && \
     tar -xzf /tmp/goreleaser.tar.gz -C /tmp/goreleaser && \
-    cp /tmp/goreleaser/goreleaser /usr/bin/ && \
+    cp /tmp/goreleaser/goreleaser /usr/local/bin/goreleaser && \
     rm -rf /tmp/goreleaser.tar.gz /tmp/goreleaser
 
 ##########################
@@ -102,6 +102,18 @@ RUN wget -q https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_V
     chmod 755 /usr/local/bin/hadolint
 
 COPY files/ci/hadolint.yaml /root/.config/hadolint.yaml
+
+##########################
+### Heroku             ###
+##########################
+RUN wget -q https://cli-assets.heroku.com/heroku-linux-x64.tar.gz -O /tmp/heroku.tar.gz && \
+    mkdir /tmp/heroku && \
+    tar -xzf /tmp/heroku.tar.gz -C /tmp/heroku && \
+    cp -R /tmp/heroku /usr/local/lib && \
+    ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku && \
+    rm -rf /tmp/heroku.tar.gz /tmp/heroku
+
+COPY files/ci/netrc ~/.netrc
 
 ##########################
 ### Packer             ###
