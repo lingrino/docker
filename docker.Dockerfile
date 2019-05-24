@@ -28,4 +28,16 @@ RUN wget -q https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_V
     chown root:root /usr/local/bin/hadolint && \
     chmod 755 /usr/local/bin/hadolint
 
-COPY files/ci/hadolint.yaml /root/.config/hadolint.yaml
+COPY files/docker/hadolint.yaml /root/.config/hadolint.yaml
+
+##########################
+### Heroku             ###
+##########################
+RUN wget -q https://cli-assets.heroku.com/heroku-linux-x64.tar.gz -O /tmp/heroku.tar.gz && \
+    mkdir /tmp/heroku && \
+    tar -xzf /tmp/heroku.tar.gz -C /tmp/heroku && \
+    cp -R /tmp/heroku/heroku /usr/local/lib && \
+    ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku && \
+    rm -rf /tmp/heroku.tar.gz /tmp/heroku
+
+COPY files/docker/netrc ~/.netrc
