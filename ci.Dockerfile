@@ -14,11 +14,11 @@ ARG GORELEASER_VERSION=0.106.0
 # https://github.com/hadolint/hadolint/releases
 ARG HADOLINT_VERSION=1.16.3
 # https://www.packer.io/downloads.html
-ARG PACKER_VERSION=1.4.0
+ARG PACKER_VERSION=1.4.1
 # https://www.terraform.io/downloads.html
-ARG TERRAFORM_VERSION=0.12.0-rc1
+ARG TERRAFORM_VERSION=0.12.0
 # https://www.vaultproject.io/downloads.html
-ARG VAULT_VERSION=1.1.1
+ARG VAULT_VERSION=1.1.2
 
 ##########################
 ### Packages           ###
@@ -102,6 +102,11 @@ RUN wget -q https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_V
     chmod 755 /usr/local/bin/hadolint
 
 COPY files/ci/hadolint.yaml /root/.config/hadolint.yaml
+
+##########################
+### Heroku             ###
+##########################
+RUN snap install --classic heroku
 
 ##########################
 ### Packer             ###

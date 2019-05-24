@@ -1,7 +1,7 @@
 ##########################
 ### Metadata           ###
 ##########################
-FROM runatlantis/atlantis
+FROM runatlantis/atlantis:latest
 LABEL maintainer="srlingren@gmail.com"
 
 ##########################
