@@ -15,6 +15,29 @@ stages:
   - publish
 
 ##########################
+### Atlantis           ###
+##########################
+lint-atlantis:
+  stage: lint
+  script:
+    - hadolint atlantis.Dockerfile
+
+build-atlantis:
+  stage: build
+  script:
+    - docker pull ${CI_REGISTRY_IMAGE}/atlantis:latest || true
+    - docker build --cache-from ${CI_REGISTRY_IMAGE}/atlantis:latest -t ${CI_REGISTRY_IMAGE}/atlantis:${CI_COMMIT_SHA} -f atlantis.Dockerfile .
+    - docker push ${CI_REGISTRY_IMAGE}/atlantis:${CI_COMMIT_SHA}
+
+publish-atlantis:
+  stage: publish
+  only: [ master ]
+  script:
+    - docker pull ${CI_REGISTRY_IMAGE}/atlantis:${CI_COMMIT_SHA}
+    - docker tag ${CI_REGISTRY_IMAGE}/atlantis:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}/atlantis:latest
+    - docker push ${CI_REGISTRY_IMAGE}/atlantis:latest
+
+##########################
 ### CI                 ###
 ##########################
 lint-ci:
