@@ -5,6 +5,12 @@ FROM runatlantis/atlantis:latest
 LABEL maintainer="srlingren@gmail.com"
 
 ##########################
-### PORTS              ###
+### SCRIPTS            ###
 ##########################
-EXPOSE 4141
+COPY files/atlantis/docker-entrypoint-wrapper.sh /usr/local/bin/docker-entrypoint-wrapper.sh
+
+##########################
+### BOOT               ###
+##########################
+ENTRYPOINT ["docker-entrypoint-wrapper.sh"]
+CMD ["server"]
