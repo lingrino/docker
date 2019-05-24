@@ -7,11 +7,10 @@ LABEL maintainer="srlingren@gmail.com"
 ##########################
 ### Packages           ###
 ##########################
-RUN apt-get update && apt-get install --no-install-recommends -y -qq \
+RUN apk -q add --no-cache \
     jq \
     python3 \
     python3-dev \
-    python3-pip \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
@@ -19,7 +18,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y -qq \
 ### Python             ###
 ##########################
 RUN pip3 install --upgrade --no-input --no-cache-dir pip && \
-    pip install --upgrade --no-input --no-cache-dir \
+    pip3 install --upgrade --no-input --no-cache-dir \
     awscli
 
 ##########################
