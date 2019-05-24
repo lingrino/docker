@@ -91,7 +91,7 @@ COPY files/ci/markdownlintrc /.markdownlintrc
 RUN wget -q https://github.com/goreleaser/goreleaser/releases/download/v${GORELEASER_VERSION}/goreleaser_Linux_x86_64.tar.gz -O /tmp/goreleaser.tar.gz && \
     mkdir /tmp/goreleaser && \
     tar -xzf /tmp/goreleaser.tar.gz -C /tmp/goreleaser && \
-    cp /tmp/goreleaser/goreleaser /usr/bin/ && \
+    cp /tmp/goreleaser/goreleaser /usr/local/bin/goreleaser && \
     rm -rf /tmp/goreleaser.tar.gz /tmp/goreleaser
 
 ##########################
@@ -106,7 +106,14 @@ COPY files/ci/hadolint.yaml /root/.config/hadolint.yaml
 ##########################
 ### Heroku             ###
 ##########################
-RUN snap install --classic heroku
+RUN wget -q https://cli-assets.heroku.com/heroku-linux-x64.tar.gz -O /tmp/heroku.tar.gz && \
+    mkdir /tmp/heroku && \
+    tar -xzf /tmp/heroku.tar.gz -C /tmp/heroku && \
+    cp -R /tmp/heroku /usr/local/lib && \
+    ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku && \
+    rm -rf /tmp/heroku.tar.gz /tmp/heroku
+
+COPY files/ci/netrc ~/.netrc
 
 ##########################
 ### Packer             ###
