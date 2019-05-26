@@ -6,6 +6,14 @@ workflows:
   default:
     plan:
       steps:
+        - init
+        - plan
+    apply:
+      steps:
+        - apply
+  aws:
+    plan:
+      steps:
         - run: source assume-role "$(cat atlantis-role-arn)")
         - init
         - plan
