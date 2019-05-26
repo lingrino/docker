@@ -1,5 +1,6 @@
 repos:
   - id: /.*/
+    allowed_overrides: [workflow]
     apply_requirements: [approved, mergeable]
 
 workflows:
