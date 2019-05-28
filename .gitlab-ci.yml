@@ -36,11 +36,6 @@ publish-atlantis:
     - docker pull ${CI_REGISTRY_IMAGE}/atlantis:${CI_COMMIT_SHA}
     - docker tag ${CI_REGISTRY_IMAGE}/atlantis:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}/atlantis:latest
     - docker push ${CI_REGISTRY_IMAGE}/atlantis:latest
-    # Push to Heroku for a release
-    - heroku container:login
-    - docker tag ${CI_REGISTRY_IMAGE}/atlantis:${CI_COMMIT_SHA} registry.heroku.com/lingrino-atlantis/web
-    - docker push registry.heroku.com/lingrino-atlantis/web
-    - heroku container:release web -a lingrino-atlantis
 
 ##########################
 ### CI                 ###

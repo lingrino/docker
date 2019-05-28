@@ -104,18 +104,6 @@ RUN wget -q https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_V
 COPY files/ci/hadolint.yaml /root/.config/hadolint.yaml
 
 ##########################
-### Heroku             ###
-##########################
-RUN wget -q https://cli-assets.heroku.com/heroku-linux-x64.tar.gz -O /tmp/heroku.tar.gz && \
-    mkdir /tmp/heroku && \
-    tar -xzf /tmp/heroku.tar.gz -C /tmp/heroku && \
-    cp -R /tmp/heroku/heroku /usr/local/lib && \
-    ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku && \
-    rm -rf /tmp/heroku.tar.gz /tmp/heroku
-
-COPY files/ci/netrc ~/.netrc
-
-##########################
 ### Packer             ###
 ##########################
 RUN wget -q https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip -O /tmp/packer.zip && \

@@ -1,5 +1,6 @@
 repos:
   - id: /.*/
+    allowed_overrides: [workflow]
     apply_requirements: [approved, mergeable]
 
 workflows:
@@ -14,10 +15,8 @@ workflows:
   aws:
     plan:
       steps:
-        - run: source assume-role "$(cat atlantis-role-arn)")
-        - init
-        - plan
+        - run: source assume-role $(cat atlantis-role-arn) && terraform init -input=false -no-color
+        - run: source assume-role $(cat atlantis-role-arn) && terraform plan -input=false -refresh -no-color -out $PLANFILE
     apply:
       steps:
-        - run: source assume-role "$(cat atlantis-role-arn)")
-        - apply
+        - run: source assume-role $(cat atlantis-role-arn) && terraform apply -no-color $PLANFILE

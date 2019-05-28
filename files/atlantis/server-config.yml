@@ -4,4 +4,4 @@ automerge: false
 checkout-strategy: merge
 log-level: warn
 repo-config: /usr/local/lib/atlantis/repo-config.yml
-repo-whitelist: github.com/lingrino/*,gitlab.com/lingrino/*
+repo-whitelist: github.com/lingrino/infra-personal
