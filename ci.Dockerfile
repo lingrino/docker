@@ -8,17 +8,17 @@ LABEL maintainer="srlingren@gmail.com"
 ### Versions           ###
 ##########################
 # https://golang.org/dl/
-ARG GO_VERSION=1.12.5
+ARG GO_VERSION=1.12.7
 # https://github.com/goreleaser/goreleaser/releases
-ARG GORELEASER_VERSION=0.106.0
+ARG GORELEASER_VERSION=0.113.1
 # https://github.com/hadolint/hadolint/releases
-ARG HADOLINT_VERSION=1.16.3
+ARG HADOLINT_VERSION=1.17.1
 # https://www.packer.io/downloads.html
-ARG PACKER_VERSION=1.4.1
+ARG PACKER_VERSION=1.4.2
 # https://www.terraform.io/downloads.html
-ARG TERRAFORM_VERSION=0.12.0
+ARG TERRAFORM_VERSION=0.12.6
 # https://www.vaultproject.io/downloads.html
-ARG VAULT_VERSION=1.1.2
+ARG VAULT_VERSION=1.2.0
 
 ##########################
 ### Packages           ###
