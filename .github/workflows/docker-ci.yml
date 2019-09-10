@@ -15,7 +15,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: Docker Login
-        run: echo ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u lingrino --password-stdin
+        run: echo "${GITHUB_TOKEN}" | docker login docker.pkg.github.com -u lingrino --password-stdin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build Docker Image
