@@ -15,9 +15,9 @@ jobs:
         with:
           fetch-depth: 1
       - name: Docker Login
-        run: docker login docker.pkg.github.com -u lingrino -p ${GITHUB_TOKEN}
+        run: docker login docker.pkg.github.com -u lingrino -p ${DOCKER_LOGIN_TOKEN}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCKER_LOGIN_TOKEN: ${{ secrets.DOCKER_LOGIN_TOKEN }}
       - name: Build Docker Image
         run: docker build -t docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:${GITHUB_SHA} -f ci.Dockerfile .
       - name: Push Docker Images
