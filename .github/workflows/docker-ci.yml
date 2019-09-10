@@ -1,0 +1,24 @@
+name: Build & Publish CI Docker Image
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 1
+      - name: Docker Login
+        run: docker login -u lingrino -p ${GITHUB_TOKEN}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build Docker Image
+        run: docker build -t docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:${GITHUB_SHA} -f ci.Dockerfile .
+      - name: Push Docker Images
+        run: docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:${GITHUB_SHA}
