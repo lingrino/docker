@@ -7,6 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     container: hadolint/hadolint:latest-debian
     steps:
+      - name: Code - Checkout
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 1
       - name: Lint
         run: hadolint ci.Dockerfile
   build-and-push:
