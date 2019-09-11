@@ -2,13 +2,13 @@
 ### Metadata           ###
 ##########################
 FROM docker:latest
-LABEL maintainer="srlingren@gmail.com"
+LABEL maintainer="sean@lingrino.com"
 
 ##########################
 ### Versions           ###
 ##########################
 # https://github.com/hadolint/hadolint/releases
-ARG HADOLINT_VERSION=1.17.1
+ARG HADOLINT_VERSION=1.17.2
 
 ##########################
 ### Packages           ###

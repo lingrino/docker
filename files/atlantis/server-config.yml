@@ -1,7 +1,0 @@
-# https://www.runatlantis.io/docs/server-configuration.html
-allow-fork-prs: false
-automerge: false
-checkout-strategy: merge
-log-level: warn
-repo-config: /usr/local/lib/atlantis/repo-config.yml
-repo-whitelist: github.com/lingrino/infra-personal
