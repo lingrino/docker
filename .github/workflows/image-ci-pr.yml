@@ -5,10 +5,9 @@ on: pull_request
 jobs:
   lint:
     runs-on: ubuntu-latest
+    container: hadolint/hadolint:latest-debian
     steps:
       - name: Lint
-        uses: docker://hadolint/hadolint:latest-debian
-      - name: Lint2
         run: hadolint ci.Dockerfile
   build-and-push:
     runs-on: ubuntu-latest
