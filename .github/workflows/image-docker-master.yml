@@ -1,12 +1,14 @@
-name: Build/Push Docker Image Master
+name: Build & Push Docker Image Master
 
 on:
   push:
     branches:
       - master
+  schedule:
+    - cron: 0 16 * * 1 # Every Monday at 4pm UTC
 
 jobs:
-  run:
+  build-and-push:
     runs-on: ubuntu-latest
     steps:
       - name: Code - Checkout
@@ -20,8 +22,14 @@ jobs:
       - name: Docker - Pull Latest
         run: docker pull docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:latest | true
       - name: Docker - Build
-        run: docker build --cache-from docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:latest -t docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:${GITHUB_SHA} -t docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:latest -f docker.Dockerfile .
+        run: |
+          docker build \
+            --cache-from docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:latest \
+            -t docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:${GITHUB_SHA} \
+            -t docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:latest \
+            -f docker.Dockerfile .
       - name: Docker - Push
         run: |
           docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:${GITHUB_SHA}
+          docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:$(date +%s)
           docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:latest

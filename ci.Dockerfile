@@ -2,7 +2,7 @@
 ### Metadata           ###
 ##########################
 FROM ubuntu:latest
-LABEL maintainer="srlingren@gmail.com"
+LABEL maintainer="sean@lingrino.com"
 
 ##########################
 ### Versions           ###

@@ -1,9 +1,9 @@
-name: Build/Push Docker Image PRs
+name: Build & Push CI Image PRs
 
 on: pull_request
 
 jobs:
-  run:
+  build-and-push:
     runs-on: ubuntu-latest
     steps:
       - name: Code - Checkout
@@ -15,8 +15,12 @@ jobs:
         env:
           DOCKER_LOGIN_TOKEN: ${{ secrets.DOCKER_LOGIN_TOKEN }}
       - name: Docker - Pull Latest
-        run: docker pull docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:latest | true
+        run: docker pull docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:latest | true
       - name: Docker - Build
-        run: docker build --cache-from docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:latest -t docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:${GITHUB_SHA} -f docker.Dockerfile .
+        run: |
+          docker build \
+            --cache-from docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:latest \
+            -t docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:${GITHUB_SHA} \
+            -f docker.Dockerfile .
       - name: Docker - Push
-        run: docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:${GITHUB_SHA}
+        run: docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:${GITHUB_SHA}
