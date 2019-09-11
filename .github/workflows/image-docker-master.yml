@@ -8,7 +8,18 @@ on:
     - cron: 0 16 * * 1 # Every Monday at 4pm UTC
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    container: docker.pkg.github.com/lingrino/docker/docker:latest
+    steps:
+      - name: Code - Checkout
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 1
+      - name: Lint
+        run: hadolint docker.Dockerfile
   build-and-push:
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: Code - Checkout
