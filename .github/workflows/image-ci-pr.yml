@@ -17,12 +17,12 @@ jobs:
     # needs: lint
     runs-on: ubuntu-latest
     steps:
-      - name: Set Timestamp
-        run: echo $(date +%s) > ${GITHUB_WORKSPACE}/timestamp.txt
       - name: Code - Checkout
         uses: actions/checkout@master
         with:
           fetch-depth: 1
+      - name: Set Timestamp
+        run: echo "$(date +%s)" > ${GITHUB_WORKSPACE}/timestamp.txt
       - name: Docker - Login
         run: docker login docker.pkg.github.com -u lingrino -p ${DOCKER_LOGIN_TOKEN}
         env:
