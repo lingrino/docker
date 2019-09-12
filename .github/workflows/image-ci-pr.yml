@@ -17,6 +17,8 @@ jobs:
     # needs: lint
     runs-on: ubuntu-latest
     steps:
+      - name: Set Timestamp
+        run: echo $(date +%s) > /timestamp.txt
       - name: Code - Checkout
         uses: actions/checkout@master
         with:
@@ -32,6 +34,9 @@ jobs:
           docker build \
             --cache-from docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:latest \
             -t docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:${GITHUB_SHA} \
+            -t docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:$(cat /timestamp.txt) \
             -f docker.Dockerfile .
       - name: Docker - Push
-        run: docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:${GITHUB_SHA}
+        run: |
+          docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:${GITHUB_SHA}
+          docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:$(cat /timestamp.txt)
