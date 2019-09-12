@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set Timestamp
-        run: echo $(date +%s) > /timestamp.txt
+        run: echo $(date +%s) > ${GITHUB_WORKSPACE}/timestamp.txt
       - name: Code - Checkout
         uses: actions/checkout@master
         with:
@@ -23,9 +23,9 @@ jobs:
           docker build \
             --cache-from docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:latest \
             -t docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:${GITHUB_SHA} \
-            -t docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:$(cat /timestamp.txt) \
+            -t docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:$(cat ${GITHUB_WORKSPACE}/timestamp.txt) \
             -f docker.Dockerfile .
       - name: Docker - Push
         run: |
           docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:${GITHUB_SHA}
-          docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:$(cat /timestamp.txt)
+          docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:$(cat ${GITHUB_WORKSPACE}/timestamp.txt)
