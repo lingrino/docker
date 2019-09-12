@@ -10,17 +10,22 @@ jobs:
         uses: actions/checkout@master
         with:
           fetch-depth: 1
+      - name: Set Timestamp
+        run: echo "$(date +%s)" > "${GITHUB_WORKSPACE}/timestamp.txt"
       - name: Docker - Login
-        run: docker login docker.pkg.github.com -u lingrino -p ${DOCKER_LOGIN_TOKEN}
+        run: docker login docker.pkg.github.com -u lingrino -p "${DOCKER_LOGIN_TOKEN}"
         env:
           DOCKER_LOGIN_TOKEN: ${{ secrets.DOCKER_LOGIN_TOKEN }}
       - name: Docker - Pull Latest
-        run: docker pull docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:latest | true
+        run: docker pull "docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:latest" || true
       - name: Docker - Build
         run: |
           docker build \
-            --cache-from docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:latest \
-            -t docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:${GITHUB_SHA} \
+            --cache-from "docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:latest" \
+            -t "docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:${GITHUB_SHA}" \
+            -t "docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:$(cat "${GITHUB_WORKSPACE}/timestamp.txt")" \
             -f docker.Dockerfile .
       - name: Docker - Push
-        run: docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:${GITHUB_SHA}
+        run: |
+          docker push "docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:${GITHUB_SHA}"
+          docker push "docker.pkg.github.com/${GITHUB_REPOSITORY}/docker:$(cat "${GITHUB_WORKSPACE}/timestamp.txt")"
