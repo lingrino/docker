@@ -13,19 +13,19 @@ jobs:
       - name: Set Timestamp
         run: echo "$(date +%s)" > "${GITHUB_WORKSPACE}/timestamp.txt"
       - name: Docker - Login
-        run: docker login docker.pkg.github.com -u lingrino -p "${DOCKER_LOGIN_TOKEN}"
+        run: echo "${DOCKER_HUB_PASSWORD}" | docker login -u lingrino --password-stdin
         env:
-          DOCKER_LOGIN_TOKEN: ${{ secrets.DOCKER_LOGIN_TOKEN }}
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
       - name: Docker - Pull Latest
-        run: docker pull "docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:latest" || true
+        run: docker pull "lingrino/ci:latest" || true
       - name: Docker - Build
         run: |
           docker build \
-            --cache-from "docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:latest" \
-            -t "docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:${GITHUB_SHA}" \
-            -t "docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:$(cat "${GITHUB_WORKSPACE}/timestamp.txt")" \
+            --cache-from "lingrino/ci:latest" \
+            -t "lingrino/ci:${GITHUB_SHA}" \
+            -t "lingrino/ci:$(cat "${GITHUB_WORKSPACE}/timestamp.txt")" \
             -f docker.Dockerfile .
       - name: Docker - Push
         run: |
-          docker push "docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:${GITHUB_SHA}"
-          docker push "docker.pkg.github.com/${GITHUB_REPOSITORY}/ci:$(cat "${GITHUB_WORKSPACE}/timestamp.txt")"
+          docker push "lingrino/ci:${GITHUB_SHA}"
+          docker push "lingrino/ci:$(cat "${GITHUB_WORKSPACE}/timestamp.txt")"
