@@ -5,6 +5,11 @@ FROM docker:latest
 LABEL maintainer="sean@lingrino.com"
 
 ##########################
+### ENTRY              ###
+##########################
+CMD ["/bin/bash", "-o", "pipefail", "-c"]
+
+##########################
 ### Versions           ###
 ##########################
 # https://github.com/hadolint/hadolint/releases
@@ -29,8 +34,3 @@ RUN wget -q https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_V
     chmod 755 /usr/local/bin/hadolint
 
 COPY files/docker/hadolint.yaml /root/.config/hadolint.yaml
-
-##########################
-### CMD                ###
-##########################
-CMD ["/bin/bash"]

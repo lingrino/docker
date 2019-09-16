@@ -5,6 +5,11 @@ FROM ubuntu:latest
 LABEL maintainer="sean@lingrino.com"
 
 ##########################
+### ENTRY              ###
+##########################
+CMD ["/bin/bash", "-o", "pipefail", "-c"]
+
+##########################
 ### Versions           ###
 ##########################
 # https://golang.org/dl/
@@ -132,8 +137,3 @@ RUN wget -q https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_
     chown root:root /usr/local/bin/vault && \
     chmod 755 /usr/local/bin/vault && \
     rm -f /tmp/vault.zip
-
-##########################
-### CMD                ###
-##########################
-CMD ["/bin/bash"]
