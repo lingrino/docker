@@ -12,7 +12,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: Lint
-        run: hadolint docker.Dockerfile
+        run: hadolint --config /root/.config/hadolint.yaml docker.Dockerfile
   build-and-push:
     needs: lint
     runs-on: ubuntu-latest

@@ -11,12 +11,8 @@ jobs:
         uses: actions/checkout@master
         with:
           fetch-depth: 1
-      - name: Lint1
-        run: whoami
-      - name: Lint2
-        run: hadolint --config /root/.config/hadolint.yaml ci.Dockerfile
       - name: Lint
-        run: hadolint ci.Dockerfile
+        run: hadolint --config /root/.config/hadolint.yaml ci.Dockerfile
   build-and-push:
     needs: lint
     runs-on: ubuntu-latest
