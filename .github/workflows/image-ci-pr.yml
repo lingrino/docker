@@ -5,7 +5,7 @@ on: pull_request
 jobs:
   lint:
     runs-on: ubuntu-latest
-    container: hadolint/hadolint:latest-debian
+    container: lingrino/ci:1568601252
     steps:
       - name: Code - Checkout
         uses: actions/checkout@master
