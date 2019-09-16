@@ -8,7 +8,6 @@ LABEL maintainer="sean@lingrino.com"
 ### ENTRY              ###
 ##########################
 CMD ["/bin/bash", "-o", "pipefail", "-c"]
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ##########################
 ### Versions           ###
