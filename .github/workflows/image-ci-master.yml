@@ -30,7 +30,7 @@ jobs:
             -t "lingrino/ci:${GITHUB_SHA}" \
             -t "lingrino/ci:$(cat "${GITHUB_WORKSPACE}/timestamp.txt")" \
             -t "lingrino/ci:latest" \
-            -f docker.Dockerfile .
+            -f ci.Dockerfile .
       - name: Docker - Push
         run: |
           docker push "lingrino/ci:${GITHUB_SHA}"

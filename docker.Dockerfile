@@ -5,11 +5,6 @@ FROM docker:latest
 LABEL maintainer="sean@lingrino.com"
 
 ##########################
-### ENTRY              ###
-##########################
-CMD ["/bin/bash", "-o", "pipefail", "-c"]
-
-##########################
 ### Versions           ###
 ##########################
 # https://github.com/hadolint/hadolint/releases

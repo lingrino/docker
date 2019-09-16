@@ -5,11 +5,6 @@ FROM ubuntu:latest
 LABEL maintainer="sean@lingrino.com"
 
 ##########################
-### ENTRY              ###
-##########################
-CMD ["/bin/bash", "-o", "pipefail", "-c"]
-
-##########################
 ### Versions           ###
 ##########################
 # https://golang.org/dl/
