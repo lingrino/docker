@@ -134,6 +134,6 @@ RUN wget -q https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_
     rm -f /tmp/vault.zip
 
 ##########################
-### ENTRYPOINT         ###
+### CMD                ###
 ##########################
-ENTRYPOINT ["/bin/bash"]
+CMD ["/bin/bash"]
