@@ -29,3 +29,8 @@ RUN wget -q https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_V
     chmod 755 /usr/local/bin/hadolint
 
 COPY files/docker/hadolint.yaml /root/.config/hadolint.yaml
+
+##########################
+### ENTRYPOINT         ###
+##########################
+ENTRYPOINT ["/bin/bash"]
