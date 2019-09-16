@@ -12,7 +12,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: Lint
-        run: hadolint ci.Dockerfile
+        run: ls
   build-and-push:
     needs: lint
     runs-on: ubuntu-latest
