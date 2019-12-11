@@ -24,8 +24,8 @@ RUN apk -q add --no-cache \
 ##########################
 ### Hadolint           ###
 ##########################
-RUN wget -q https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-Linux-x86_64 -O /usr/local/bin/hadolint &&
-    chown root:root /usr/local/bin/hadolint &&
-    chmod 755 /usr/local/bin/hadolint
+RUN wget -q https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-Linux-x86_64 -O /usr/local/bin/hadolint \
+    && chown root:root /usr/local/bin/hadolint \
+    && chmod 755 /usr/local/bin/hadolint
 
 COPY files/docker/hadolint.yaml /root/.config/hadolint.yaml
