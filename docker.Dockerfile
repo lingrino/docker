@@ -8,7 +8,7 @@ LABEL maintainer="sean@lingrino.com"
 ### Versions           ###
 ##########################
 # https://github.com/hadolint/hadolint/releases
-ARG HADOLINT_VERSION=1.17.3
+ARG HADOLINT_VERSION=1.17.4
 
 ##########################
 ### Packages           ###
