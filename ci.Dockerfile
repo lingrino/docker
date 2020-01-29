@@ -3,7 +3,6 @@
 ##########################
 FROM ubuntu:latest
 LABEL maintainer="sean@lingrino.com"
-ENTRYPOINT ["/bin/bash"]
 
 ##########################
 ### Versions           ###
@@ -31,6 +30,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y -qq \
     docker \
     gcc \
     jq \
+    make \
     nmap \
     npm \
     python3 \
@@ -38,6 +38,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y -qq \
     python3-pip \
     shellcheck \
     software-properties-common \
+    ssh \
     unzip \
     wget \
     && add-apt-repository ppa:git-core/ppa \
