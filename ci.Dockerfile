@@ -8,7 +8,9 @@ LABEL maintainer="sean@lingrino.com"
 ### Versions           ###
 ##########################
 # https://golang.org/dl/
-ARG GO_VERSION=1.13.6
+ARG GO_VERSION=1.13.7
+# https://github.com/golangci/golangci-lint/releases
+ARG GOLANGCILINT_VERSION=1.23.1
 # https://github.com/goreleaser/goreleaser/releases
 ARG GORELEASER_VERSION=0.124.1
 # https://github.com/hadolint/hadolint/releases
@@ -16,9 +18,9 @@ ARG HADOLINT_VERSION=1.17.4
 # https://www.packer.io/downloads.html
 ARG PACKER_VERSION=1.5.1
 # https://www.terraform.io/downloads.html
-ARG TERRAFORM_VERSION=0.12.19
+ARG TERRAFORM_VERSION=0.12.20
 # https://www.vaultproject.io/downloads.html
-ARG VAULT_VERSION=1.3.1
+ARG VAULT_VERSION=1.3.2
 
 ##########################
 ### Packages           ###
@@ -87,6 +89,15 @@ COPY files/ci/ansible.cfg /etc/ansible/ansible.cfg
 ### Markdownlint       ###
 ##########################
 COPY files/ci/markdownlintrc /.markdownlintrc
+
+##########################
+### GolangCI Lint      ###
+##########################
+RUN wget -q https://github.com/golangci/golangci-lint/releases/download/v${GOLANGCILINT_VERSION}/golangci-lint-${GOLANGCILINT_VERSION}-linux-amd64.tar.gz -O /tmp/golangci-lint.tar.gz \
+    && mkdir /tmp/golangci-lint \
+    && tar -xzf /tmp/golangci-lint.tar.gz -C /tmp/golangci-lint \
+    && cp /tmp/golangci-lint/golangci-lint /usr/local/bin/golangci-lint \
+    && rm -rf /tmp/golangci-lint.tar.gz /tmp/golangci-lint
 
 ##########################
 ### Goreleaser         ###
