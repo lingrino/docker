@@ -96,7 +96,7 @@ COPY files/ci/markdownlintrc /.markdownlintrc
 RUN wget -q https://github.com/golangci/golangci-lint/releases/download/v${GOLANGCILINT_VERSION}/golangci-lint-${GOLANGCILINT_VERSION}-linux-amd64.tar.gz -O /tmp/golangci-lint.tar.gz \
     && mkdir /tmp/golangci-lint \
     && tar -xzf /tmp/golangci-lint.tar.gz -C /tmp/golangci-lint \
-    && cp /tmp/golangci-lint/golangci-lint /usr/local/bin/golangci-lint \
+    && cp /tmp/golangci-lint/golangci-lint-${GOLANGCILINT_VERSION}-linux-amd64/golangci-lint /usr/local/bin/golangci-lint \
     && rm -rf /tmp/golangci-lint.tar.gz /tmp/golangci-lint
 
 ##########################
