@@ -38,6 +38,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y -qq \
     python3-pip \
     shellcheck \
     software-properties-common \
+    ssh \
     unzip \
     wget \
     && add-apt-repository ppa:git-core/ppa \
