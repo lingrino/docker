@@ -3,6 +3,7 @@
 ##########################
 FROM ubuntu:latest
 LABEL maintainer="sean@lingrino.com"
+ENTRYPOINT ["/bin/bash"]
 
 ##########################
 ### Versions           ###
