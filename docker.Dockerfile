@@ -3,6 +3,7 @@
 ##########################
 FROM docker:latest
 LABEL maintainer="sean@lingrino.com"
+ENTRYPOINT ["/bin/bash"]
 
 ##########################
 ### Versions           ###
