@@ -93,6 +93,11 @@ COPY files/ci/ansible.cfg /etc/ansible/ansible.cfg
 COPY files/ci/markdownlintrc /.markdownlintrc
 
 ##########################
+### Shellcheck         ###
+##########################
+COPY files/ci/shellcheckrc ~/.shellcheckrc
+
+##########################
 ### GolangCI Lint      ###
 ##########################
 RUN wget -q https://github.com/golangci/golangci-lint/releases/download/v${GOLANGCILINT_VERSION}/golangci-lint-${GOLANGCILINT_VERSION}-linux-amd64.tar.gz -O /tmp/golangci-lint.tar.gz \
@@ -100,6 +105,8 @@ RUN wget -q https://github.com/golangci/golangci-lint/releases/download/v${GOLAN
     && tar -xzf /tmp/golangci-lint.tar.gz -C /tmp/golangci-lint \
     && cp /tmp/golangci-lint/golangci-lint-${GOLANGCILINT_VERSION}-linux-amd64/golangci-lint /usr/local/bin/golangci-lint \
     && rm -rf /tmp/golangci-lint.tar.gz /tmp/golangci-lint
+
+COPY files/ci/golangci.yml /.golangci.yml
 
 ##########################
 ### Goreleaser         ###
