@@ -10,11 +10,11 @@ LABEL maintainer="sean@lingrino.com"
 # https://golang.org/dl/
 ARG GO_VERSION=1.13.7
 # https://github.com/golangci/golangci-lint/releases
-ARG GOLANGCILINT_VERSION=1.23.1
+ARG GOLANGCILINT_VERSION=1.23.2
 # https://github.com/goreleaser/goreleaser/releases
-ARG GORELEASER_VERSION=0.124.1
+ARG GORELEASER_VERSION=0.125.0
 # https://github.com/hadolint/hadolint/releases
-ARG HADOLINT_VERSION=1.17.4
+ARG HADOLINT_VERSION=1.17.5
 # https://www.packer.io/downloads.html
 ARG PACKER_VERSION=1.5.1
 # https://www.terraform.io/downloads.html
