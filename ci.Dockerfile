@@ -44,7 +44,8 @@ COPY files/ci/yarn.list    /etc/apt/sources.list.d/yarn.list
 COPY files/ci/node.list    /etc/apt/sources.list.d/nodesource.list
 
 RUN apt-key add /tmp/node_gpg.key \
-    && apt-key add /tmp/yarn_gpg.key
+    && apt-key add /tmp/yarn_gpg.key \
+    && rm -f /tmp/node_gpg.key /tmp/yarn_gpg.key
 
 ##########################
 ### Packages           ###
