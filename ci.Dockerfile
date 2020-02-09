@@ -1,18 +1,23 @@
 ##########################
 ### Metadata           ###
 ##########################
-FROM ubuntu:latest
+FROM ubuntu:eoan
 LABEL maintainer="sean@lingrino.com"
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ##########################
 ### Versions           ###
 ##########################
+# Notes
+# Update the ubuntu version in the FROM tag when needed
+# update the node version and distribution name in files/ci/node.list when needed
+
 # https://golang.org/dl/
 ARG GO_VERSION=1.13.7
 # https://github.com/golangci/golangci-lint/releases
-ARG GOLANGCILINT_VERSION=1.23.2
+ARG GOLANGCILINT_VERSION=1.23.3
 # https://github.com/goreleaser/goreleaser/releases
-ARG GORELEASER_VERSION=0.125.0
+ARG GORELEASER_VERSION=0.126.0
 # https://github.com/hadolint/hadolint/releases
 ARG HADOLINT_VERSION=1.17.5
 # https://www.packer.io/downloads.html
@@ -21,6 +26,27 @@ ARG PACKER_VERSION=1.5.1
 ARG TERRAFORM_VERSION=0.12.20
 # https://www.vaultproject.io/downloads.html
 ARG VAULT_VERSION=1.3.2
+# https://github.com/cloudflare/wrangler/releases
+ARG WRANGLER_VERSION=1.7.0
+
+##########################
+### Repositories       ###
+##########################
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y -qq \
+    gpg-agent \
+    software-properties-common \
+    && add-apt-repository ppa:git-core/ppa \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY files/ci/node_gpg.key /tmp/node_gpg.key
+COPY files/ci/yarn_gpg.key /tmp/yarn_gpg.key
+COPY files/ci/yarn.list    /etc/apt/sources.list.d/yarn.list
+COPY files/ci/node.list    /etc/apt/sources.list.d/nodesource.list
+
+RUN apt-key add /tmp/node_gpg.key \
+    && apt-key add /tmp/yarn_gpg.key \
+    && rm -f /tmp/node_gpg.key /tmp/yarn_gpg.key
 
 ##########################
 ### Packages           ###
@@ -29,21 +55,19 @@ RUN apt-get update && apt-get install --no-install-recommends -y -qq \
     curl \
     docker \
     gcc \
+    git \
     jq \
     make \
     nmap \
-    npm \
+    nodejs \
     python3 \
     python3-dev \
     python3-pip \
     shellcheck \
-    software-properties-common \
     ssh \
     unzip \
     wget \
-    && add-apt-repository ppa:git-core/ppa \
-    && apt-get update \
-    && apt-get install --no-install-recommends -y -qq git \
+    yarn \
     && rm -rf /var/lib/apt/lists/*
 
 ##########################
@@ -155,3 +179,12 @@ RUN wget -q https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_
     && chown root:root /usr/local/bin/vault \
     && chmod 755 /usr/local/bin/vault \
     && rm -f /tmp/vault.zip
+
+##########################
+### Wrangler           ###
+##########################
+RUN wget -q https://github.com/cloudflare/wrangler/releases/download/v${WRANGLER_VERSION}/wrangler-v${WRANGLER_VERSION}-x86_64-unknown-linux-musl.tar.gz -O /tmp/wrangler.tar.gz \
+    && mkdir /tmp/wrangler \
+    && tar -xzf /tmp/wrangler.tar.gz -C /tmp/wrangler \
+    && cp /tmp/wrangler/wrangler-v${WRANGLER_VERSION}-x86_64-unknown-linux-musl/wrangler /usr/local/bin/wrangler \
+    && rm -rf /tmp/wrangler.tar.gz /tmp/wrangler
