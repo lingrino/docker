@@ -37,7 +37,7 @@ RUN apt-get update \
     gpg-agent \
     software-properties-common \
     && add-apt-repository ppa:git-core/ppa \
-    && && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 COPY files/ci/node_gpg.key /tmp/node_gpg.key
 COPY files/ci/yarn_gpg.key /tmp/yarn_gpg.key
