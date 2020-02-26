@@ -186,5 +186,5 @@ RUN wget -q https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_
 RUN wget -q https://github.com/cloudflare/wrangler/releases/download/v${WRANGLER_VERSION}/wrangler-v${WRANGLER_VERSION}-x86_64-unknown-linux-musl.tar.gz -O /tmp/wrangler.tar.gz \
     && mkdir /tmp/wrangler \
     && tar -xzf /tmp/wrangler.tar.gz -C /tmp/wrangler \
-    && cp /tmp/wrangler/wrangler-v${WRANGLER_VERSION}-x86_64-unknown-linux-musl/wrangler /usr/local/bin/wrangler \
+    && cp /tmp/wrangler/dist/wrangler /usr/local/bin/wrangler \
     && rm -rf /tmp/wrangler.tar.gz /tmp/wrangler
