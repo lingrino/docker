@@ -13,21 +13,21 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # update the node version and distribution name in files/ci/node.list when needed
 
 # https://golang.org/dl/
-ARG GO_VERSION=1.13.7
+ARG GO_VERSION=1.14.1
 # https://github.com/golangci/golangci-lint/releases
-ARG GOLANGCILINT_VERSION=1.23.3
+ARG GOLANGCILINT_VERSION=1.24.0
 # https://github.com/goreleaser/goreleaser/releases
-ARG GORELEASER_VERSION=0.126.0
+ARG GORELEASER_VERSION=0.129.0
 # https://github.com/hadolint/hadolint/releases
 ARG HADOLINT_VERSION=1.17.5
 # https://www.packer.io/downloads.html
-ARG PACKER_VERSION=1.5.1
+ARG PACKER_VERSION=1.5.5
 # https://www.terraform.io/downloads.html
-ARG TERRAFORM_VERSION=0.12.20
+ARG TERRAFORM_VERSION=0.12.24
 # https://www.vaultproject.io/downloads.html
-ARG VAULT_VERSION=1.3.2
+ARG VAULT_VERSION=1.3.4
 # https://github.com/cloudflare/wrangler/releases
-ARG WRANGLER_VERSION=1.7.0
+ARG WRANGLER_VERSION=1.8.3
 
 ##########################
 ### Repositories       ###
@@ -101,15 +101,27 @@ RUN pip3 install --upgrade --no-input --no-cache-dir pip \
     && pip install --upgrade --no-input --no-cache-dir setuptools \
     && pip install --upgrade --no-input --no-cache-dir \
     ansible \
-    ansible-lint \
-    awscli \
-    boto \
-    boto3
+    ansible-lint
 
 ##########################
 ### Ansible            ###
 ##########################
 COPY files/ci/ansible.cfg /etc/ansible/ansible.cfg
+
+##########################
+### AWS CLI            ###
+##########################
+RUN wget -q "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -O /tmp/awscli.zip \
+    && unzip -q /tmp/awscli.zip -d /tmp \
+    && /tmp/aws/install \
+    && rm -rf /tmp/awscli.zip /tmp/aws
+
+##########################
+### Code Climate       ###
+##########################
+RUN wget -q "https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64" -O /usr/local/bin/cc-test-reporter \
+    && chown root:root /usr/local/bin/cc-test-reporter \
+    && chmod 755 /usr/local/bin/cc-test-reporter
 
 ##########################
 ### Markdownlint       ###
@@ -154,7 +166,7 @@ COPY files/ci/hadolint.yaml /root/.config/hadolint.yaml
 ### Packer             ###
 ##########################
 RUN wget -q https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip -O /tmp/packer.zip \
-    && unzip /tmp/packer.zip -d /usr/local/bin \
+    && unzip -q /tmp/packer.zip -d /usr/local/bin \
     && chown root:root /usr/local/bin/packer \
     && chmod 755 /usr/local/bin/packer \
     && rm -f /tmp/packer.zip
@@ -163,7 +175,7 @@ RUN wget -q https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PAC
 ### Terraform          ###
 ##########################
 RUN wget -q https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -O /tmp/terraform.zip \
-    && unzip /tmp/terraform.zip -d /usr/local/bin \
+    && unzip -q /tmp/terraform.zip -d /usr/local/bin \
     && chown root:root /usr/local/bin/terraform \
     && chmod 755 /usr/local/bin/terraform \
     && rm -f /tmp/terraform.zip
@@ -175,7 +187,7 @@ COPY files/ci/terraformrc ~/.terraformrc
 ### Vault              ###
 ##########################
 RUN wget -q https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip -O /tmp/vault.zip \
-    && unzip /tmp/vault.zip -d /usr/local/bin \
+    && unzip -q /tmp/vault.zip -d /usr/local/bin \
     && chown root:root /usr/local/bin/vault \
     && chmod 755 /usr/local/bin/vault \
     && rm -f /tmp/vault.zip
@@ -186,5 +198,5 @@ RUN wget -q https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_
 RUN wget -q https://github.com/cloudflare/wrangler/releases/download/v${WRANGLER_VERSION}/wrangler-v${WRANGLER_VERSION}-x86_64-unknown-linux-musl.tar.gz -O /tmp/wrangler.tar.gz \
     && mkdir /tmp/wrangler \
     && tar -xzf /tmp/wrangler.tar.gz -C /tmp/wrangler \
-    && cp /tmp/wrangler/wrangler-v${WRANGLER_VERSION}-x86_64-unknown-linux-musl/wrangler /usr/local/bin/wrangler \
+    && cp /tmp/wrangler/dist/wrangler /usr/local/bin/wrangler \
     && rm -rf /tmp/wrangler.tar.gz /tmp/wrangler
