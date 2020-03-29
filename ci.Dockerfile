@@ -53,7 +53,6 @@ RUN apt-key add /tmp/node_gpg.key \
 ##########################
 RUN apt-get update && apt-get install --no-install-recommends -y -qq \
     curl \
-    docker \
     gcc \
     git \
     jq \
@@ -69,6 +68,11 @@ RUN apt-get update && apt-get install --no-install-recommends -y -qq \
     wget \
     yarn \
     && rm -rf /var/lib/apt/lists/*
+
+##########################
+### Docker             ###
+##########################
+RUN wget -O - https://get.docker.com/ | sh
 
 ##########################
 ### Golang             ###
