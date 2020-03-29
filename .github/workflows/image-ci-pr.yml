@@ -24,9 +24,9 @@ jobs:
       - name: Set Timestamp
         run: echo "$(date +%s)" > "${GITHUB_WORKSPACE}/timestamp.txt"
       - name: Docker - Login
-        run: echo "${DOCKER_HUB_PASSWORD}" | docker login -u lingrino --password-stdin
+        run: echo "${DOCKER_HUB_TOKEN}" | docker login -u lingrino --password-stdin
         env:
-          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
       - name: Docker - Pull Latest
         run: docker pull "lingrino/ci:latest" || true
       - name: Docker - Build
