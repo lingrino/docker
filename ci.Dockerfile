@@ -13,11 +13,11 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # update the node version and distribution name in files/ci/node.list when needed
 
 # https://golang.org/dl/
-ARG GO_VERSION=1.14.1
+ARG GO_VERSION=1.14.2
 # https://github.com/golangci/golangci-lint/releases
-ARG GOLANGCILINT_VERSION=1.24.0
+ARG GOLANGCILINT_VERSION=1.25.0
 # https://github.com/goreleaser/goreleaser/releases
-ARG GORELEASER_VERSION=0.129.0
+ARG GORELEASER_VERSION=0.132.1
 # https://github.com/hadolint/hadolint/releases
 ARG HADOLINT_VERSION=1.17.5
 # https://www.packer.io/downloads.html
@@ -25,9 +25,9 @@ ARG PACKER_VERSION=1.5.5
 # https://www.terraform.io/downloads.html
 ARG TERRAFORM_VERSION=0.12.24
 # https://www.vaultproject.io/downloads.html
-ARG VAULT_VERSION=1.3.4
+ARG VAULT_VERSION=1.4.0
 # https://github.com/cloudflare/wrangler/releases
-ARG WRANGLER_VERSION=1.8.3
+ARG WRANGLER_VERSION=1.8.4
 
 ##########################
 ### Repositories       ###
