@@ -15,17 +15,17 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # https://golang.org/dl/
 ARG GO_VERSION=1.14.6
 # https://github.com/golangci/golangci-lint/releases
-ARG GOLANGCILINT_VERSION=1.28.3
+ARG GOLANGCILINT_VERSION=1.29.0
 # https://github.com/goreleaser/goreleaser/releases
-ARG GORELEASER_VERSION=0.140.0
+ARG GORELEASER_VERSION=0.140.1
 # https://github.com/hadolint/hadolint/releases
 ARG HADOLINT_VERSION=1.18.0
 # https://www.packer.io/downloads.html
 ARG PACKER_VERSION=1.6.0
 # https://www.terraform.io/downloads.html
-ARG TERRAFORM_VERSION=0.12.28
+ARG TERRAFORM_VERSION=0.12.29
 # https://www.vaultproject.io/downloads.html
-ARG VAULT_VERSION=1.4.3
+ARG VAULT_VERSION=1.5.0
 # https://github.com/cloudflare/wrangler/releases
 ARG WRANGLER_VERSION=1.10.3
 

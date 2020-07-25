@@ -1,9 +1,10 @@
-name: Build & Push Docker Image Master
+name: Build & Push CI Image Main
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      - master
+      - main
   schedule:
     - cron: 0 16 * * 1 # Every Monday at 4pm UTC
 
@@ -13,17 +14,17 @@ jobs:
     container: lingrino/ci:latest
     steps:
       - name: Code - Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - name: Lint
-        run: hadolint --config /root/.config/hadolint.yaml docker.Dockerfile
+        run: hadolint --config /root/.config/hadolint.yaml ci.Dockerfile
   build-and-push:
     needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: Code - Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - name: Set Timestamp
@@ -33,17 +34,17 @@ jobs:
         env:
           DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
       - name: Docker - Pull Latest
-        run: docker pull "lingrino/docker:latest" || true
+        run: docker pull lingrino/ci:latest || true
       - name: Docker - Build
         run: |
           docker build \
-            --cache-from "lingrino/docker:latest" \
-            -t "lingrino/docker:${GITHUB_SHA}" \
-            -t "lingrino/docker:$(cat "${GITHUB_WORKSPACE}/timestamp.txt")" \
-            -t "lingrino/docker:latest" \
-            -f docker.Dockerfile .
+            --cache-from "lingrino/ci:latest" \
+            -t "lingrino/ci:${GITHUB_SHA}" \
+            -t "lingrino/ci:$(cat "${GITHUB_WORKSPACE}/timestamp.txt")" \
+            -t "lingrino/ci:latest" \
+            -f ci.Dockerfile .
       - name: Docker - Push
         run: |
-          docker push "lingrino/docker:${GITHUB_SHA}"
-          docker push "lingrino/docker:$(cat "${GITHUB_WORKSPACE}/timestamp.txt")"
-          docker push "lingrino/docker:latest"
+          docker push "lingrino/ci:${GITHUB_SHA}"
+          docker push "lingrino/ci:$(cat "${GITHUB_WORKSPACE}/timestamp.txt")"
+          docker push "lingrino/ci:latest"
